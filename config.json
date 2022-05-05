@@ -1,0 +1,10 @@
+{
+  "firestore": {
+    "apiKey": "AIzaSyB1veOGsl_QDJsoHEUEbXRAcRfaQw3LY5k",
+    "authDomain": "bikes-559ff.firebaseapp.com",
+    "projectId": "bikes-559ff",
+    "storageBucket": "bikes-559ff.appspot.com",
+    "messagingSenderId": "756165415197",
+    "appId": "1:756165415197:web:7cc6be01210a5e317091f4"
+  }
+}
