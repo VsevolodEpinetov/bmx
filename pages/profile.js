@@ -8,9 +8,10 @@ import AuthCheck from '../components/AuthCheck';
 import { auth, firestore } from '../lib/auth/firebase';
 import { useDocumentData, useCollectionData, useCollection } from 'react-firebase-hooks/firestore'
 import { UserContext } from '../lib/auth/context';
+import AdminPanel from '../lib/components/AdminPanel';
 
 export default function Home() {
-  const { user } = useContext(UserContext);
+  const { user, userData } = useContext(UserContext);
   const [isSSR, setIsSSR] = useState(true);
 
   useEffect(() => {
@@ -34,6 +35,14 @@ export default function Home() {
           <hr />
           <h3>Спортсмены</h3>
           <Athletes />
+          <AdminPanel
+            user={user}
+            userData={userData}
+          />
+          {
+            userData.isJudge &&
+            <span>Судья</span>
+          }
         </AuthCheck>
       </main>
     </div>
@@ -128,7 +137,6 @@ function Athletes() {
                   city: city,
                   bikeNumber: bikeNumber
                 }
-                console.log(athleteObj)
                 await firestore
                   .collection('athletes')
                   .add(athleteObj)

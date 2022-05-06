@@ -4,7 +4,7 @@ import { firestore } from '../../auth/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore'
 
 
-const ChooseClubDropdown = ({club, setClub, defaultValue}) => {
+const ChooseClubDropdown = ({club, setClub, defaultValue, ...props}) => {
   const allClubsRef = firestore.collection('clubs');
   const allActiveClubsQuery = allClubsRef.where('isActive', '==', true);
   const [allActiveClubsSnapshot, allActiveClubsSnapshotLoading] = useCollection(allActiveClubsQuery);
@@ -20,7 +20,7 @@ const ChooseClubDropdown = ({club, setClub, defaultValue}) => {
   return (
     <>
       {allActiveClubs &&
-        <select name='club' id='clubs' onChange={(e) => setClub(e.target.value)} value={club}>
+        <select name='club' id='clubs' onChange={(e) => setClub(e.target.value)} value={club} {...props}>
           <option disabled value="">{defaultValue}</option>
           {allActiveClubs?.map(club => <option value={club.id} key={`club-${club.id}`}>{club.name}</option>)}
         </select>
