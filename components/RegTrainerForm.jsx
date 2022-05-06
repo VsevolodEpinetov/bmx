@@ -3,7 +3,7 @@ import ChooseClubDropdown from './Inputs/ChooseClubDropdown';
 import CredentialsInputs from './Inputs/CredentialsInputs';
 import TrainerInfoInputs from './Inputs/TrainerInfoInputs';
 
-import { auth, firestore } from '../auth/firebase';
+import { auth, firestore } from '../lib/auth/firebase';
 
 async function createNewTrainer ({mail, password}, trainerData, setErrorMessage) {
   await auth

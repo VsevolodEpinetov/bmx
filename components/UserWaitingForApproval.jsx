@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import ChooseClubDropdown from './Inputs/ChooseClubDropdown';
 
-import { firestore } from '../auth/firebase';
+import { firestore } from '../lib/auth/firebase';
 
 const UserWaitingForApproval = ({ user }) => {
   const [clubInfo, clubLoading] = useDocumentData(user.club);

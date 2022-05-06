@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { firestore } from '../../auth/firebase';
+import { firestore } from '../../lib/auth/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore'
 
 

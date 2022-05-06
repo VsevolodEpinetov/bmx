@@ -1,7 +1,7 @@
 import React from 'react';
 
 // auth
-import { firestore } from '../auth/firebase';
+import { firestore } from '../lib/auth/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore'
 import UserWaitingForApproval from './UserWaitingForApproval';
 

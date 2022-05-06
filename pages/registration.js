@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 
 import { auth, firestore, googleAuthProvider } from '../lib/auth/firebase';
 import { UserContext } from '../lib/auth/context'
-import RegTrainerForm from "../lib/components/RegTrainerForm";
+import RegTrainerForm from "../components/RegTrainerForm";
 
 export default function LoginPage({ }) {
   const { user, userName } = useContext(UserContext);

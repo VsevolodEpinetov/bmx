@@ -8,7 +8,7 @@ import AuthCheck from '../components/AuthCheck';
 import { auth, firestore } from '../lib/auth/firebase';
 import { useDocumentData, useCollectionData, useCollection } from 'react-firebase-hooks/firestore'
 import { UserContext } from '../lib/auth/context';
-import AdminPanel from '../lib/components/AdminPanel';
+import AdminPanel from '../components/AdminPanel';
 
 export default function Home() {
   const { user, userData } = useContext(UserContext);
