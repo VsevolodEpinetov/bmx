@@ -3,7 +3,6 @@ import { UserContext } from '../lib/auth/context'
 import { useUserData } from '../lib/auth/hooks'
 import { MantineProvider } from '@mantine/core';
 import Head from 'next/head'
-import { MyHeader } from '../components/UI/MyHeader';
 import { MyNavbar } from '../components/UI/MyNavbar';
 import { AppShell, Navbar, Header } from '@mantine/core';
 import { useState } from 'react';

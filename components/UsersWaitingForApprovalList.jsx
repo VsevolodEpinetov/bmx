@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from '@mantine/core';
 
 // auth
 import { firestore } from '../lib/auth/firebase';
@@ -18,11 +19,20 @@ const UsersWaitingForApprovalList = ({ user }) => {
   });
 
   return (
-    <div>
-      {
-        allUsersWaitingForApproval?.map(user => <UserWaitingForApproval user={user} />)
-      }
-    </div>
+    <Table striped highlightOnHover>
+      <thead>
+        <tr>
+          <th>ФИО</th>
+          <th colSpan={2}>Клуб</th>
+          <th colSpan={2}>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          allUsersWaitingForApproval?.map(user => <UserWaitingForApproval user={user} />)
+        }
+      </tbody>
+    </Table>
   );
 };
 

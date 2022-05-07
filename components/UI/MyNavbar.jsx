@@ -13,7 +13,7 @@ import {
   Logout,
   FileAlert,
 } from 'tabler-icons-react';
-import { Logo } from '../../assets/image/logo';
+import MyUserButton from '../UI/MyUserButton';
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -103,7 +103,10 @@ export function MyNavbar({ }) {
     <Navbar width={{ sm: 300 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          UserButton potentially
+          <MyUserButton 
+            name={`${userData.surname} ${userData.name[0]}.${userData.patronymic[0]}.`}
+            email={user.email}
+          />
         </Group>
         {links}
         {userData.isAdmin &&

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import ChooseClubDropdown from './Inputs/ChooseClubDropdown';
+import { Button, Checkbox  } from '@mantine/core';
 
 import { firestore } from '../lib/auth/firebase';
+import { UserCheck, UserX, X } from 'tabler-icons-react';
 
 const UserWaitingForApproval = ({ user }) => {
   const [clubInfo, clubLoading] = useDocumentData(user.club);
@@ -46,17 +48,19 @@ const UserWaitingForApproval = ({ user }) => {
   }
 
   return (
-    <div>
-      {user.surname} {user.name} {user.patronymic} | 
-      <span style={{ display: wantToChangeClub ? 'none' : 'inline' }}> {clubInfo?.name} <button onClick={changeVisibility} >Изменить клуб?</button></span> 
-      <span style={{ display: wantToChangeClub ? 'inline' : 'none' }}>
-        <ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} />
-        <button onClick={changeVisibility}>X</button>
-      </span>|
-      <input type="checkbox" id="isMain" name="isMain" checked={isMainChecked} onChange={(e) => setIsMainChecked(e.target.checked)}/> <label htmlFor="isMain"> Главный тренер?</label>
-      <button onClick={approveUser}>Подтвердить</button>
-      <button onClick={deleteUser}>Удалить</button>
-    </div>
+    <tr>
+      <td>{user.surname} {user.name} {user.patronymic}</td>
+      <td>
+        <span style={{ display: wantToChangeClub ? 'none' : 'inline' }}> {clubInfo?.name} <Button compact variant="subtle" onClick={changeVisibility} >Изменить клуб?</Button></span>
+        <span style={{ display: wantToChangeClub ? 'inline' : 'none' }}>
+          <ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} />
+          <Button compact variant="subtle" onClick={changeVisibility} ><X/></Button>
+        </span>
+      </td>
+      <td><Checkbox id="isMain" name="isMain" checked={isMainChecked} onChange={(e) => setIsMainChecked(e.target.checked)} label="Главный тренер"/></td>
+      <td><Button leftIcon={<UserCheck />} onClick={approveUser} color="green">Подтвердить</Button></td>
+      <td><Button leftIcon={<UserX />} onClick={deleteUser} color='red'>Удалить</Button></td>
+    </tr>
   );
 }
 

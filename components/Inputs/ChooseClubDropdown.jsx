@@ -1,4 +1,5 @@
 import React from 'react';
+import { Select } from '@mantine/core';
 
 import { firestore } from '../../lib/auth/firebase';
 import { useCollection } from 'react-firebase-hooks/firestore'
@@ -20,10 +21,15 @@ const ChooseClubDropdown = ({club, setClub, defaultValue, ...props}) => {
   return (
     <>
       {allActiveClubs &&
-        <select name='club' id='clubs' onChange={(e) => setClub(e.target.value)} value={club} {...props}>
-          <option disabled value="">{defaultValue}</option>
-          {allActiveClubs?.map(club => <option value={club.id} key={`club-${club.id}`}>{club.name}</option>)}
-        </select>
+        <Select 
+          name='club' 
+          id='clubs' 
+          onChange={setClub} value={club} {...props}
+          placeholder={defaultValue}
+          data={allActiveClubs?.map(club => {
+            return { value: club.id, label: club.name }
+          })}
+          />
       }
     </>
   );
