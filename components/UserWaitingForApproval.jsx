@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDocumentData } from 'react-firebase-hooks/firestore';
 import ChooseClubDropdown from './Inputs/ChooseClubDropdown';
-import { Button, Checkbox  } from '@mantine/core';
+import { Button, Checkbox, Grid } from '@mantine/core';
 
 import { firestore } from '../lib/auth/firebase';
 import { UserCheck, UserX, X } from 'tabler-icons-react';
@@ -51,10 +51,12 @@ const UserWaitingForApproval = ({ user }) => {
     <tr>
       <td>{user.surname} {user.name} {user.patronymic}</td>
       <td>
-        <span style={{ display: wantToChangeClub ? 'none' : 'inline' }}> {clubInfo?.name} <Button compact variant="subtle" onClick={changeVisibility} >Изменить клуб?</Button></span>
-        <span style={{ display: wantToChangeClub ? 'inline' : 'none' }}>
-          <ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} />
-          <Button compact variant="subtle" onClick={changeVisibility} ><X/></Button>
+        <span style={{ display: wantToChangeClub ? 'none' : 'block' }}> {clubInfo?.name} <Button compact variant="subtle" onClick={changeVisibility} >Изменить?</Button></span>
+        <span style={{ display: wantToChangeClub ? 'block' : 'none' }}>
+        <Grid>
+          <Grid.Col span={9}><ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} /> </Grid.Col>
+          <Grid.Col span={3}><Button compact variant="subtle" onClick={changeVisibility}><X/></Button></Grid.Col>
+        </Grid>
         </span>
       </td>
       <td><Checkbox id="isMain" name="isMain" checked={isMainChecked} onChange={(e) => setIsMainChecked(e.target.checked)} label="Главный тренер"/></td>

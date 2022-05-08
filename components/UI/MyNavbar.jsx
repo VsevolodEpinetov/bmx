@@ -1,19 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import { createStyles, Navbar, Group, Code } from '@mantine/core';
 import {
-  BellRinging,
-  Fingerprint,
+  Home2,
+  UserPlus,
   Key,
-  Settings,
-  TwoFA,
-  DatabaseImport,
-  Receipt2,
-  SwitchHorizontal,
-  Logout,
-  FileAlert,
+  User,
+  Tools,
+  Logout
 } from 'tabler-icons-react';
 import MyUserButton from '../UI/MyUserButton';
+
+import { auth } from '../../lib/auth/firebase'
 
 const useStyles = createStyles((theme, _params, getRef) => {
   const icon = getRef('icon');
@@ -74,13 +72,6 @@ const useStyles = createStyles((theme, _params, getRef) => {
   };
 });
 
-const data = [
-  { link: '/', label: 'Главная', icon: BellRinging },
-  { link: '/trainers', label: 'Спортсмены', icon: Receipt2 },
-  { link: '/registration', label: 'Регистрация', icon: Fingerprint },
-  { link: '/profile', label: 'Админка', icon: Key },
-];
-
 import { UserContext } from '../../lib/auth/context';
 
 export function MyNavbar({ }) {
@@ -88,41 +79,79 @@ export function MyNavbar({ }) {
   const router = useRouter();
   const { user, userData } = useContext(UserContext);
 
-  const links = data.map((item) => (
-    <a
-      className={cx(classes.link, { [classes.linkActive]: item.link === router.asPath })}
-      href={item.link}
-      key={item.label}
-    >
-      <item.icon className={classes.linkIcon} />
-      <span>{item.label}</span>
-    </a>
-  ));
+  const [isSSR, setIsSSR] = useState(true);
+
+  useEffect(() => {
+    setIsSSR(false);
+  }, []);
 
   return (
+    !isSSR &&
     <Navbar width={{ sm: 300 }} p="md">
       <Navbar.Section grow>
         <Group className={classes.header} position="apart">
-          <MyUserButton 
-            name={`${userData.surname} ${userData.name[0]}.${userData.patronymic[0]}.`}
-            email={user.email}
+          <MyUserButton
+            name={userData.name ? `${userData.surname} ${userData.name[0]}.${userData.patronymic[0]}.` : 'Нет пользователя'}
+            email={user ? user.email : ''}
           />
         </Group>
-        {links}
+        <a
+          className={cx(classes.link, { [classes.linkActive]: '/' === router.asPath })}
+          href='/'
+          key='Главная'
+        >
+          <Home2 className={classes.linkIcon} />
+          <span>Главная</span>
+        </a>
+        {
+          !user &&
+          <>
+            <a
+              className={cx(classes.link, { [classes.linkActive]: '/registration' === router.asPath })}
+              href='/registration'
+              key='Регистрация'
+            >
+              <UserPlus className={classes.linkIcon} />
+              <span>Регистрация</span>
+            </a>
+            <a
+              className={cx(classes.link, { [classes.linkActive]: '/login' === router.asPath })}
+              href='/login'
+              key='Вход'
+            >
+              <Key className={classes.linkIcon} />
+              <span>Вход</span>
+            </a>
+          </>
+        }
+        {
+          user &&
+          <a
+            className={cx(classes.link, { [classes.linkActive]: '/profile' === router.asPath })}
+            href='/profile'
+            key='Профиль'
+          >
+            <User className={classes.linkIcon} />
+            <span>Профиль</span>
+          </a>
+        }
         {userData.isAdmin &&
           <a
             className={cx(classes.link, { [classes.linkActive]: '/admin' === router.asPath })}
             href='/admin'
             key='Админка'
           >
-            <FileAlert className={classes.linkIcon} />
+            <Tools className={classes.linkIcon} />
             <span>Админка</span>
           </a>
         }
       </Navbar.Section>
 
       <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={(event) => event.preventDefault()}>
+        <a href="#" className={classes.link} onClick={async (e) => {
+          e.preventDefault();
+          auth.signOut()
+        }}>
           <Logout className={classes.linkIcon} />
           <span>Выйти</span>
         </a>
