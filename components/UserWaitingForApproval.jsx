@@ -54,7 +54,7 @@ const UserWaitingForApproval = ({ user }) => {
         <span style={{ display: wantToChangeClub ? 'none' : 'block' }}> {clubInfo?.name} <Button compact variant="subtle" onClick={changeVisibility} >Изменить?</Button></span>
         <span style={{ display: wantToChangeClub ? 'block' : 'none' }}>
         <Grid>
-          <Grid.Col span={9}><ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} /> </Grid.Col>
+          <Grid.Col span={9}><ChooseClubDropdown defaultValue='Выбери новый клуб' club={newClub} setClub={setNewClub} size='xs'/> </Grid.Col>
           <Grid.Col span={3}><Button compact variant="subtle" onClick={changeVisibility}><X/></Button></Grid.Col>
         </Grid>
         </span>
