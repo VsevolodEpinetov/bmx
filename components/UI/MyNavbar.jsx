@@ -147,15 +147,17 @@ export function MyNavbar({ }) {
         }
       </Navbar.Section>
 
-      <Navbar.Section className={classes.footer}>
-        <a href="#" className={classes.link} onClick={async (e) => {
-          e.preventDefault();
-          auth.signOut()
-        }}>
-          <Logout className={classes.linkIcon} />
-          <span>Выйти</span>
-        </a>
-      </Navbar.Section>
+      {user &&
+        <Navbar.Section className={classes.footer}>
+          <a href="#" className={classes.link} onClick={async (e) => {
+            e.preventDefault();
+            auth.signOut()
+          }}>
+            <Logout className={classes.linkIcon} />
+            <span>Выйти</span>
+          </a>
+        </Navbar.Section>
+      }
     </Navbar>
   );
 }
